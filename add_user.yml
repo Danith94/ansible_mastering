@@ -25,10 +25,18 @@
         groups: "{{ item.groups }}"
         create_home: true
         shell: /bin/bash
-      with_items: "{{ users }}"
+      with_items:
+         - name: "Viraj"
+           groups: sudo,developers
+         - name: "Saman"
+           groups: sudo,developers
 
     - name: Add ssh key for ansible_user
       authorized_key:
         user: ansible_user
-        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/{{ item }}.pub') }}"
-      with_items: "{{ users }}"
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/{{ item.name}}.pub') }}"
+      with_items:
+        - name: "Viraj"
+          groups: sudo,developers
+        - name: "Saman"
+          groups: sudo,developers
